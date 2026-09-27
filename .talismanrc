@@ -53,9 +53,9 @@ fileignoreconfig:
 - filename: AGENTS.md
   checksum: f1b60e6fdfe312e4aaea974c94f9508374d4f25d86840c3358e17fd85db87bf5
 - filename: Gemfile.lock
-  checksum: c7faf7043726ff1c7a9697185aad035d547ee71e61243f8348d0a77c6402949b
+  checksum: 8d7f34b26226882e892a0f69cac006da75c899695634d88eaa78ca135067e7cd
 - filename: features/support/env.rb
-  checksum: 56bd38aff9a56d3b7f3cd4e509496369373e3ed9b5f1e40064ee3197be87ceb7
+  checksum: 82212114dad225e29e5f8afa8867362c378ac9f1b8c07165728810830cab7964
 - filename: openspec/changes/archive/2026-09-25-add-hello-world-greeting/proposal.md
   checksum: bef1d309e3e9f6825e3dbab324ad77806bbaf1f75dad06ffa69a4234396b3b0c
 - filename: openspec/changes/archive/2026-09-25-add-hello-world-greeting/tasks.md

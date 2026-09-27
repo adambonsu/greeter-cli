@@ -72,7 +72,4 @@ RSpec/LeakyLocalVariable:
   Exclude:
     - "spec/security/**/*"
 
-# fake_clock_spec deliberately asserts repeated calls return the same value.
-RSpec/IdenticalEqualityAssertion:
-  Exclude:
-    - "spec/unit/adapters/fake_clock_spec.rb"
+

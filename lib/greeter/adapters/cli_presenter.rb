@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'greeter/ports/greeting_presenter'
+require 'greeter/core/ports/greeting_presenter'
 
 module Greeter
   module Adapters
-    class CliPresenter < Ports::GreetingPresenter
+    class CliPresenter < Greeter::Core::Ports::GreetingPresenter
       def initialize(output: $stdout) # rubocop:disable Lint/MissingSuper
         @output = output
       end

@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
 require 'stringio'
+require 'greeter/core'
 require 'greeter/adapters/cli_presenter'
-require 'greeter/domain/guest_name'
-require 'greeter/domain/greeting'
 
 RSpec.describe Greeter::Adapters::CliPresenter do
   let(:output)    { StringIO.new }
   let(:presenter) { described_class.new(output: output) }
 
   def build_greeting(name:, time: Time.utc(2024, 6, 1, 9, 0, 0))
-    Greeter::Domain::Greeting.new(
-      guest_name: Greeter::Domain::GuestName.new(name),
+    Greeter::Core::Domain::Greeting.new(
+      guest_name: Greeter::Core::Domain::GuestName.new(name),
       greeted_at: time
     )
   end

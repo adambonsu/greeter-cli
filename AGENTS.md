@@ -2,15 +2,23 @@
 
 ## Architecture: Hexagonal (three layers only)
 
-| Layer | Path | Rules |
+Domain and ports live in the **`greeter-core`** gem (`Greeter::Core::Domain`,
+`Greeter::Core::Ports`). This app (`greeter-cli`) owns the adapters that wire
+the core to real I/O.
+
+| Layer | Location | Rules |
 |---|---|---|
-| Domain | `lib/greeter/domain` | Pure Ruby, zero gems, zero I/O, no AWS, no `Time.now` |
-| Ports | `lib/greeter/ports` | Abstract interfaces (driving + driven); unimplemented methods raise `NotImplementedError` |
-| Adapters | `lib/greeter/adapters` | All I/O: CLI, HTTP/Lambda, DynamoDB, in-memory fakes |
+| Domain | `greeter-core` gem (`Greeter::Core::Domain`) | Pure Ruby, zero gems, zero I/O, no AWS, no `Time.now` |
+| Ports | `greeter-core` gem (`Greeter::Core::Ports`) | Abstract interfaces (driving + driven); unimplemented methods raise `NotImplementedError` |
+| Adapters | `lib/greeter/adapters` | All I/O: CLI, HTTP/Lambda, DynamoDB |
+
+Test doubles (`FakeClock`, `FixedClock`) ship in the gem under
+`Greeter::Core::Testing` and are loaded with `require 'greeter/core/testing'`.
 
 ## Dependency rule
 
-Dependencies point **inward only**. `domain` must not reference `adapters`.
+Dependencies point **inward only**. Adapters depend on `greeter-core`; the core
+never references adapters.
 
 ## Dependency injection
 

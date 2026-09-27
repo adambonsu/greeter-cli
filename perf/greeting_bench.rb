@@ -12,10 +12,9 @@ require 'stringio'
 require 'benchmark/ips'
 
 $LOAD_PATH.unshift(File.join(__dir__, '..', 'lib'))
-$LOAD_PATH.unshift(File.join(__dir__, '..', 'spec', 'support'))
 
-require 'fixed_clock'
-require 'greeter/domain/greeting_service'
+require 'greeter/core'
+require 'greeter/core/testing'
 require 'greeter/adapters/cli_presenter'
 
 BASELINE_PATH = File.join(__dir__, 'baseline.json')
@@ -48,8 +47,8 @@ end
 # Object graph
 # ---------------------------------------------------------------------------
 
-clock     = FixedClock.new(Time.utc(2024, 6, 1, 9, 0, 0))
-service   = Greeter::Domain::GreetingService.new(clock: clock)
+clock     = Greeter::Core::Testing::FixedClock.new(Time.utc(2024, 6, 1, 9, 0, 0))
+service   = Greeter::Core::Domain::GreetingService.new(clock: clock)
 
 output    = StringIO.new
 presenter = Greeter::Adapters::CliPresenter.new(output: output)

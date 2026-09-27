@@ -6,14 +6,15 @@ SimpleCov.start do
   enable_coverage :branch
   minimum_coverage 95
 
-  group 'Domain',   'lib/greeter/domain'
-  group 'Ports',    'lib/greeter/ports'
+  # Domain and ports now live in the greeter-core gem. This app covers the
+  # driven adapters (CLI presenter, system clock) that wire the core to I/O.
   group 'Adapters', 'lib/greeter/adapters'
 
   skip '/spec/'
 end
 
-Dir[File.join(__dir__, 'support', '**', '*.rb')].each { |f| require f }
+support_glob = Dir[File.join(__dir__, 'support', '**', '*.rb')]
+support_glob.each { |f| require f }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

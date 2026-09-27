@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 require 'stringio'
-require 'greeter/domain/guest_name'
-require 'greeter/domain/greeting_service'
+require 'greeter/core'
+require 'greeter/core/testing'
 require 'greeter/adapters/cli_presenter'
 
 # ---------------------------------------------------------------------------
@@ -75,12 +75,12 @@ RSpec.describe 'Input validation security', :aggregate_failures do
 
   def invoke(raw_name)
     output    = StringIO.new
-    service   = Greeter::Domain::GreetingService.new(clock: FixedClock.new)
+    service   = Greeter::Core::Domain::GreetingService.new(clock: Greeter::Core::Testing::FixedClock.new)
     presenter = Greeter::Adapters::CliPresenter.new(output: output)
     greeting  = service.greet(raw_name)
     presenter.present(greeting)
     { ok: true, output: output.string }
-  rescue Greeter::Domain::InvalidGuestName, ArgumentError, EncodingError => e
+  rescue Greeter::Core::Domain::InvalidGuestName, ArgumentError, EncodingError => e
     { ok: false, error: e.message }
   end
 
@@ -138,30 +138,30 @@ RSpec.describe 'Input validation security', :aggregate_failures do
 
   it 'rejects all ANSI escape sequences' do
     SEC_ANSI_ESCAPES.each do |payload|
-      expect { Greeter::Domain::GuestName.new(payload) }
-        .to raise_error(Greeter::Domain::InvalidGuestName)
+      expect { Greeter::Core::Domain::GuestName.new(payload) }
+        .to raise_error(Greeter::Core::Domain::InvalidGuestName)
     end
   end
 
   it 'rejects all C0/DEL control characters' do
     SEC_CONTROL_CHARS.each do |payload|
-      expect { Greeter::Domain::GuestName.new(payload) }
-        .to raise_error(Greeter::Domain::InvalidGuestName)
+      expect { Greeter::Core::Domain::GuestName.new(payload) }
+        .to raise_error(Greeter::Core::Domain::InvalidGuestName)
     end
   end
 
   it 'rejects log-injection payloads containing newlines or null bytes' do
     SEC_LOG_INJECTION.each do |payload|
-      expect { Greeter::Domain::GuestName.new(payload) }
-        .to raise_error(Greeter::Domain::InvalidGuestName)
+      expect { Greeter::Core::Domain::GuestName.new(payload) }
+        .to raise_error(Greeter::Core::Domain::InvalidGuestName)
     end
   end
 
   it 'rejects strings exceeding 64 characters' do
-    expect { Greeter::Domain::GuestName.new('A' * 65) }
-      .to raise_error(Greeter::Domain::InvalidGuestName)
-    expect { Greeter::Domain::GuestName.new('A' * 10_000) }
-      .to raise_error(Greeter::Domain::InvalidGuestName)
+    expect { Greeter::Core::Domain::GuestName.new('A' * 65) }
+      .to raise_error(Greeter::Core::Domain::InvalidGuestName)
+    expect { Greeter::Core::Domain::GuestName.new('A' * 10_000) }
+      .to raise_error(Greeter::Core::Domain::InvalidGuestName)
   end
 
   it 'accepts or safely normalises RTL/zero-width Unicode that contains no control chars' do

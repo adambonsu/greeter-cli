@@ -3,21 +3,20 @@
 
 $LOAD_PATH.unshift(File.join(__dir__, '..', 'lib'))
 
-require 'greeter/domain/guest_name'
-require 'greeter/domain/greeting_service'
+require 'greeter/core'
 require 'greeter/adapters/system_clock'
 require 'greeter/adapters/cli_presenter'
 
 clock     = Greeter::Adapters::SystemClock.new
 presenter = Greeter::Adapters::CliPresenter.new(output: $stdout)
-service   = Greeter::Domain::GreetingService.new(clock: clock)
+service   = Greeter::Core::Domain::GreetingService.new(clock: clock)
 
 raw_name = ARGV.first.to_s
 
 begin
   greeting = service.greet(raw_name)
   presenter.present(greeting)
-rescue Greeter::Domain::InvalidGuestName => e
+rescue Greeter::Core::Domain::InvalidGuestName => e
   warn("Error: #{e.message}")
   exit 2
 end

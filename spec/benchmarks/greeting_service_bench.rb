@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-require 'greeter/domain/greeting_service'
+require 'greeter/core'
+require 'greeter/core/testing'
 
 # Scenario: Emits the greeting in under 5 ms at p99 for a single invocation
 #
 # Uses Process.clock_gettime for sub-millisecond wall-clock measurement.
 # benchmark-ips is used to warm the JIT/interpreter before sampling.
 RSpec.describe 'GreetingService latency' do
-  let(:clock)   { FixedClock.new(Time.utc(2024, 6, 1, 9, 0, 0)) }
-  let(:service) { Greeter::Domain::GreetingService.new(clock: clock) }
+  let(:clock)   { Greeter::Core::Testing::FixedClock.new(Time.utc(2024, 6, 1, 9, 0, 0)) }
+  let(:service) { Greeter::Core::Domain::GreetingService.new(clock: clock) }
 
   it 'completes #greet in under 5 ms at p99 over 200 iterations' do
     # Warm up
