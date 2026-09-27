@@ -33,8 +33,3 @@ Feature: Guest greeting
     When the CLI is invoked with a name containing an escape sequence
     Then the exit code is 2
     And stderr contains an invalid characters message
-
-  @scenario-emits-the-greeting-in-under-5-ms-at-p99-for-a-single-invocation
-  Scenario: Emits the greeting in under 5 ms at p99 for a single invocation
-    When GreetingService#greet is benchmarked with a valid name and a FixedClock
-    Then the p99 wall-clock time per iteration is below 5 ms

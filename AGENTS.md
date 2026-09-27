@@ -30,7 +30,16 @@ Write the failing RSpec example before the implementation, in the same commit.
 
 ## OpenSpec ↔ Cucumber traceability
 
-Every OpenSpec spec scenario maps to exactly one Cucumber scenario, tagged with the requirement name.
+This app's OpenSpec covers CLI-observable behaviour (arguments, exit codes,
+stdout/stderr). Every OpenSpec scenario maps to exactly one Cucumber scenario,
+tagged with the requirement name.
+
+Name-validation and domain rules are owned by `greeter-core`'s OpenSpec (mapped
+there to RSpec examples). This app references those rules where the CLI surfaces
+them (e.g. exit 2 + stderr for an invalid name) rather than re-specifying them,
+so there is a single source of truth per rule. Where the app implements a
+gem-defined port (e.g. `CliPresenter` satisfies `Greeter::Core::Ports::GreetingPresenter`),
+a spec proves the adapter satisfies that contract.
 
 ## Toolchain
 

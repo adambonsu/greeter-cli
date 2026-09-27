@@ -31,11 +31,12 @@ Metrics/ModuleLength:
 # ---------------------------------------------------------------------------
 # RSpec cops
 #
-# This project uses an intentional spec layout (spec/unit, spec/security,
-# spec/benchmarks) that diverges from rubocop-rspec's default class-mirroring
-# convention, plus cross-cutting security and benchmark specs that describe
-# behaviours rather than a single class. The settings below keep the cops
-# meaningful for ordinary unit specs while not fighting that structure.
+# This project uses an intentional spec layout (spec/unit, spec/security)
+# that diverges from rubocop-rspec's default class-mirroring convention, plus
+# a cross-cutting security suite that describes behaviours rather than a single
+# class. The settings below keep the cops meaningful for ordinary unit specs
+# while not fighting that structure. (The domain latency benchmark now lives in
+# the greeter-core gem.)
 # ---------------------------------------------------------------------------
 
 # Our unit specs live under spec/unit/... rather than spec/greeter/...,
@@ -43,27 +44,19 @@ Metrics/ModuleLength:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
-# Benchmark "specs" are executable performance checks, not *_spec.rb files.
-RSpec/SpecFilePathSuffix:
-  Exclude:
-    - "spec/benchmarks/**/*"
-
-# Security and benchmark specs describe behaviours/scenarios, not one class.
+# Security specs describe behaviours/scenarios, not one class.
 RSpec/DescribeClass:
   Exclude:
     - "spec/security/**/*"
-    - "spec/benchmarks/**/*"
 
-# Security and benchmark examples are inherently multi-step.
+# Security examples are inherently multi-step.
 RSpec/ExampleLength:
   Exclude:
     - "spec/security/**/*"
-    - "spec/benchmarks/**/*"
 
 RSpec/MultipleExpectations:
   Exclude:
     - "spec/security/**/*"
-    - "spec/benchmarks/**/*"
     - "spec/unit/adapters/system_clock_spec.rb"
 
 # The security suite generates examples in a loop from source-file paths;

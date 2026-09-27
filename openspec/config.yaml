@@ -2,11 +2,16 @@ schema: spec-driven
 
 context: |
   See AGENTS.md for full project conventions. Summary:
-  - Hexagonal architecture: domain / ports / adapters under lib/greeter/
-  - Dependencies point inward only; domain must not reference adapters
+  - This is greeter-cli: the CLI application. Domain + ports live in the
+    greeter-core gem (Greeter::Core); this repo owns the adapters under
+    lib/greeter/adapters that wire the core to real I/O.
+  - Hexagonal: adapters depend on greeter-core; the core never references adapters.
   - All collaborators injected via constructor keyword arguments; no globals or singletons
   - TDD: failing RSpec example before implementation, same commit
-  - Every OpenSpec spec scenario maps to exactly one Cucumber scenario tagged with the requirement name
+  - OpenSpec here covers CLI-observable behaviour (arguments, exit codes,
+    stdout/stderr). Every scenario maps to exactly one Cucumber scenario tagged
+    with the requirement name. Name-validation rules are owned by greeter-core's
+    OpenSpec and referenced, not re-specified, here.
   - Ruby 3.3.5, frozen_string_literal on every file, RuboCop clean
 
 # Project context (optional)

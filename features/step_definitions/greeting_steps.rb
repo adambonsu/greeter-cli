@@ -37,18 +37,3 @@ end
 Then('stderr contains an invalid characters message') do
   expect(stderr_io.string).not_to be_empty
 end
-
-When('GreetingService#greet is benchmarked with a valid name and a FixedClock') do
-  iterations = 200
-  times = Array.new(iterations) do
-    t0 = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    service.greet('Alice')
-    Process.clock_gettime(Process::CLOCK_MONOTONIC) - t0
-  end
-  times.sort!
-  @p99_ms = times[(iterations * 0.99).ceil - 1] * 1000.0
-end
-
-Then('the p99 wall-clock time per iteration is below 5 ms') do
-  expect(@p99_ms).to be < 5.0
-end
