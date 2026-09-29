@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 ruby '3.3.5'
 
 # Domain core and ports, extracted into a standalone gem.
-gem 'greeter-core', git: 'https://github.com/adambonsu/greeter-core.git', branch: 'main'
+# Published at https://rubygems.org/gems/greeter-core
+gem 'greeter-core', '~> 0.1'
 
 gem 'aws-sdk-dynamodb', '~> 1'
 
