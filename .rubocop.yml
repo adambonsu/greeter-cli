@@ -44,10 +44,11 @@ Metrics/ModuleLength:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
-# Security specs describe behaviours/scenarios, not one class.
+# Security specs and the exe subprocess spec describe behaviours, not one class.
 RSpec/DescribeClass:
   Exclude:
     - "spec/security/**/*"
+    - "spec/unit/exe/**/*"
 
 # Security examples are inherently multi-step.
 RSpec/ExampleLength:

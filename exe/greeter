@@ -4,8 +4,14 @@
 $LOAD_PATH.unshift(File.join(__dir__, '..', 'lib'))
 
 require 'greeter/core'
+require 'greeter/cli/version'
 require 'greeter/adapters/system_clock'
 require 'greeter/adapters/cli_presenter'
+
+if ['--version', '-v'].include?(ARGV.first)
+  puts "greeter-cli #{Greeter::Cli::VERSION} (greeter-core #{Greeter::Core::VERSION})"
+  exit 0
+end
 
 clock     = Greeter::Adapters::SystemClock.new
 presenter = Greeter::Adapters::CliPresenter.new(output: $stdout)
