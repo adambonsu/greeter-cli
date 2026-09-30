@@ -7,7 +7,6 @@ ruby '3.3.5'
 # Published at https://rubygems.org/gems/greeter-core
 gem 'greeter-core', '~> 0.1'
 
-
 group :development, :test do
   gem 'benchmark-ips'                   # micro-benchmarks
   gem 'brakeman', require: false        # static security analysis
