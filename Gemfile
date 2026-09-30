@@ -7,7 +7,6 @@ ruby '3.3.5'
 # Published at https://rubygems.org/gems/greeter-core
 gem 'greeter-core', '~> 0.1'
 
-gem 'aws-sdk-dynamodb', '~> 1'
 
 group :development, :test do
   gem 'benchmark-ips'                   # micro-benchmarks
@@ -20,5 +19,3 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
 end
-
-# gem "rails"
